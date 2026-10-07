@@ -1,6 +1,7 @@
 package com.postapi.common.security;
 
-import com.postapi.common.shared.dto.ApiResponse;
+import tools.jackson.databind.ObjectMapper;
+import com.postapi.common.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -9,7 +10,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -58,17 +58,13 @@ public class SecurityExceptionHandler
     ) throws IOException {
 
         response.setStatus(status);
+
         response.setContentType(
                 MediaType.APPLICATION_JSON_VALUE
         );
 
         ApiResponse<Void> body =
-                new ApiResponse<>(
-                        false,
-                        message,
-                        null,
-                        java.time.Instant.now()
-                );
+                ApiResponse.error(message);
 
         response.getWriter().write(
                 objectMapper.writeValueAsString(body)

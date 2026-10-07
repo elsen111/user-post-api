@@ -1,4 +1,4 @@
-package com.postapi.common.shared.base;
+package com.postapi.common.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;

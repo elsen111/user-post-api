@@ -1,7 +1,7 @@
 package com.postapi.post.entity;
 
 import com.postapi.comment.entity.Comment;
-import com.postapi.common.shared.base.BaseEntity;
+import com.postapi.common.base.BaseEntity;
 import com.postapi.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;

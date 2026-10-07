@@ -2,7 +2,7 @@ package com.postapi.user.entity;
 
 import com.postapi.auth.entity.RefreshToken;
 import com.postapi.comment.entity.Comment;
-import com.postapi.common.shared.base.BaseEntity;
+import com.postapi.common.base.BaseEntity;
 import com.postapi.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;

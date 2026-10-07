@@ -6,6 +6,9 @@ import com.postapi.auth.dto.RefreshTokenRequest;
 import com.postapi.auth.dto.RegisterRequest;
 import com.postapi.auth.entity.RefreshToken;
 import com.postapi.auth.repository.RefreshTokenRepository;
+import com.postapi.common.exception.ConflictException;
+import com.postapi.common.exception.InvalidTokenException;
+import com.postapi.common.exception.ResourceNotFoundException;
 import com.postapi.common.security.JwtProperties;
 import com.postapi.common.security.JwtService;
 import com.postapi.common.security.TokenHashUtil;
@@ -45,13 +48,13 @@ public class AuthServiceImpl implements AuthService {
         String email = normalizeEmail(request.email());
 
         if (userRepository.existsByUsernameIgnoreCase(username)) {
-            throw new IllegalArgumentException(
+            throw new ConflictException(
                     "Username is already in use"
             );
         }
 
         if (userRepository.existsByEmailIgnoreCase(email)) {
-            throw new IllegalArgumentException(
+            throw new ConflictException(
                     "Email is already in use"
             );
         }
@@ -90,7 +93,7 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findById(principal.getId())
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -108,13 +111,13 @@ public class AuthServiceImpl implements AuthService {
         RefreshToken currentToken =
                 refreshTokenRepository.findByTokenHash(tokenHash)
                         .orElseThrow(() ->
-                                new IllegalArgumentException(
+                                new InvalidTokenException(
                                         "Invalid refresh token"
                                 )
                         );
 
         if (!currentToken.isUsable()) {
-            throw new IllegalArgumentException(
+            throw new InvalidTokenException(
                     "Refresh token is expired or revoked"
             );
         }

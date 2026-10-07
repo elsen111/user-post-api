@@ -1,4 +1,4 @@
-package com.postapi.common.shared.dto;
+package com.postapi.common.dto;
 
 import java.time.Instant;
 
@@ -32,5 +32,21 @@ public record ApiResponse<T>(
                 null,
                 Instant.now()
         );
+    }
+
+    public static <T> ApiResponse<T> error(
+            String message,
+            T data
+    ) {
+        return new ApiResponse<>(
+                false,
+                message,
+                data,
+                Instant.now()
+        );
+    }
+
+    public static ApiResponse<Void> error(String message) {
+        return error(message, null);
     }
 }

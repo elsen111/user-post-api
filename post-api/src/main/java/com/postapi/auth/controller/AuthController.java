@@ -5,7 +5,7 @@ import com.postapi.auth.dto.LoginRequest;
 import com.postapi.auth.dto.RefreshTokenRequest;
 import com.postapi.auth.dto.RegisterRequest;
 import com.postapi.auth.service.AuthService;
-import com.postapi.common.shared.dto.ApiResponse;
+import com.postapi.common.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

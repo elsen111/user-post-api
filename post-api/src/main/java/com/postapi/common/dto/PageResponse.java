@@ -1,4 +1,4 @@
-package com.postapi.common.shared.dto;
+package com.postapi.common.dto;
 
 import org.springframework.data.domain.Page;
 
