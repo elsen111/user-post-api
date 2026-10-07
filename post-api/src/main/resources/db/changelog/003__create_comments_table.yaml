@@ -33,7 +33,7 @@ databaseChangeLog:
 
               - column:
                   name: content
-                  type: VARCHAR(1000)
+                  type: VARCHAR(3000)
                   constraints:
                     nullable: false
 

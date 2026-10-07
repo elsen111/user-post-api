@@ -4,7 +4,7 @@ databaseChangeLog:
       file: db/changelog/001__create_users_table.yaml
 
   - include:
-      file: db/changelog/002__create_posts.yaml
+      file: db/changelog/002__create_posts_table.yaml
 
   - include:
       file: db/changelog/003__create_comments_table.yaml
