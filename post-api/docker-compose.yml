@@ -2,24 +2,82 @@ services:
 
   postgres:
     image: postgres:16-alpine
+
     container_name: blog-api-postgres
 
+    restart: unless-stopped
+
     environment:
-      POSTGRES_DB: blog_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d blog_db"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+        ]
       interval: 5s
       timeout: 5s
       retries: 10
 
+    networks:
+      - blog-api-network
+
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: blog-api
+
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    environment:
+      APP_NAME: ${APP_NAME}
+      SERVER_PORT: 8080
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_TOKEN_EXPIRATION: ${JWT_ACCESS_TOKEN_EXPIRATION}
+      JWT_REFRESH_TOKEN_EXPIRATION: ${JWT_REFRESH_TOKEN_EXPIRATION}
+
+      RATE_LIMIT_ENABLED: ${RATE_LIMIT_ENABLED}
+
+      RATE_LIMIT_CAPACITY: ${RATE_LIMIT_CAPACITY}
+      RATE_LIMIT_REFILL_TOKENS: ${RATE_LIMIT_REFILL_TOKENS}
+      RATE_LIMIT_REFILL_DURATION_SECONDS: ${RATE_LIMIT_REFILL_DURATION_SECONDS}
+
+      AUTH_RATE_LIMIT_CAPACITY: ${AUTH_RATE_LIMIT_CAPACITY}
+      AUTH_RATE_LIMIT_REFILL_TOKENS: ${AUTH_RATE_LIMIT_REFILL_TOKENS}
+      AUTH_RATE_LIMIT_REFILL_DURATION_SECONDS: ${AUTH_RATE_LIMIT_REFILL_DURATION_SECONDS}
+
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+
+    networks:
+      - blog-api-network
+
+
 volumes:
   postgres_data:
+
+
+networks:
+  blog-api-network:
+    driver: bridge

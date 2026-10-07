@@ -40,8 +40,16 @@ out/
 
 .idea/
 
+### Environment files ###
 .env
+.env.*
+!.env.example
 
 .DS_Store
 
 application-local.yml
+
+### Logs ###
+*.log
+logs/
+

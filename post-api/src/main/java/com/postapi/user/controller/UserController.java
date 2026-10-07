@@ -103,9 +103,7 @@ public class UserController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "No existing account records matching this requested user ID were discovered")
     })
     @GetMapping("/{userId}/posts")
-    public ResponseEntity<
-            ApiResponse<PageResponse<PostResponse>>
-            > getUserPosts(
+    public ResponseEntity<ApiResponse<PageResponse<PostResponse>>> getUserPosts(
             @PathVariable UUID userId,
             Pageable pageable
     ) {
