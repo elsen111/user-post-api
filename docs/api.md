@@ -131,7 +131,7 @@ Paginated responses place a `PageResponse` in `data`:
 }
 ```
 
-> Without an explicit `sort`, ordering is not guaranteed. Always pass `sort=createdAt,desc` when you need a stable, newest-first feed.
+> Without an explicit `sort`, ordering isn't guaranteed. Always pass `sort=createdAt,desc` when you need a stable, newest-first feed.
 
 ### Data types
 
