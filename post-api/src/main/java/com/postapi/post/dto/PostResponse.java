@@ -1,6 +1,7 @@
 package com.postapi.post.dto;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record PostResponse(
@@ -10,8 +11,8 @@ public record PostResponse(
         String username,
         String title,
         String content,
-        Instant createdAt,
-        Instant updatedAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 
 ) {
 }

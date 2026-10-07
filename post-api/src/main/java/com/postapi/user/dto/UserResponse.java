@@ -3,6 +3,7 @@ package com.postapi.user.dto;
 import com.postapi.user.entity.UserRole;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record UserResponse(
@@ -12,8 +13,8 @@ public record UserResponse(
         String email,
         UserRole role,
         boolean enabled,
-        Instant createdAt,
-        Instant updatedAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 
 ) {
 }

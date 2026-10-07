@@ -1,6 +1,7 @@
 package com.postapi.comment.dto;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CommentResponse(
@@ -10,8 +11,8 @@ public record CommentResponse(
         UUID userId,
         String username,
         String content,
-        Instant createdAt,
-        Instant updatedAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 
 ) {
 }
